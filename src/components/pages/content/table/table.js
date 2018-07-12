@@ -107,9 +107,9 @@ class Table extends Component{
       {this.state.datashow.map((item,index)=>{
         return(
           <tr key={index} className="coin_item"  style={{textAlign:'right'}}>
-            <th scope="row">{index}</th>
+            <th scope="row">{index+1}</th>
             <td>
-            <a href={"null"}>
+            <a href={`${item.short}`}>
             <div style={{display:'flex',flexDirection:'row',alignItems:'center'  }}>
             <span className={`sprite sprite-${this.format_space(item.long.toLowerCase())} small_coin_logo`}></span>
             <span style={{paddingLeft:10,textAlign:'left'}}>{item.long}</span>

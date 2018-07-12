@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Table from './table/table';
 import {connect} from 'react-redux';
-var dem = 10;
 class Content extends Component{
   render(){
     return(

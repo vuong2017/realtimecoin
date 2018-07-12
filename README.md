@@ -1,5 +1,6 @@
 # realtimecoin
 realtimecoin
+Thông tin : Trang web sử api có sẵn của trang http://capcoin.io . Sử dụng reactjs để làm phần hiển thị cho người dùng <br/> 
 --> Hướng dẫn cài và sử dụng web realtimecoin <br/>
 Lưu ý : máy phải được cái đặt Nodejs <br/>
 1. Mở cmd lên --> git clone https://github.com/vuong2017/realtimecoin.git <br/>

@@ -5,4 +5,4 @@ Lưu ý : máy phải được cái đặt Nodejs <br/>
 1. Mở cmd lên --> git clone https://github.com/vuong2017/realtimecoin.git <br/>
 2. vào forder vừa clone mở cmd lên chạy lệnh npm install <br/>
 3. chạy lệnh npm start (mở trình duyệt lên và chạy localhost:3000) <br/>
-4.<b>DEMO</b> https://xemcoin.herokuapp.com/
+<b>4.DEMO</b> https://xemcoin.herokuapp.com/

@@ -5,8 +5,8 @@
 
 }
 .short{
-  -webkit-animation: titlecoin 2s infinite; /* Safari 4.0 - 8.0 */
-  animation: titlecoin 2s infinite;
+  -webkit-animation: short 2s infinite; /* Safari 4.0 - 8.0 */
+  animation: short 2s infinite;
 }
 .titlecoin{
   padding:10px;
@@ -42,7 +42,9 @@
 .rankcoin_number{
   font-size: 30px;
   position: absolute;
-  bottom:0
+  bottom:0;
+  -webkit-animation: short 2s infinite; /* Safari 4.0 - 8.0 */
+  animation: short 2s infinite;
 }
 .name{
   width: 70%;
@@ -72,12 +74,12 @@
   padding: 5px;
   color:white;
 }
-@-webkit-keyframes titlecoin {
+@-webkit-keyframes short {
   from {  color: white;}
   to {  color: red;}
 }
 /* Standard syntax */
-@keyframes titlecoin {
+@keyframes short {
   from {  color: white;}
   to {  color: red;}
 }

@@ -10,3 +10,9 @@ export function Fetchdatafail(error){
     error
   };
 }
+export function GetParams(params){
+  return{
+    type:"GetParams",
+    params
+  };
+}

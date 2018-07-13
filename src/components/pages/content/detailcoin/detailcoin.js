@@ -3,16 +3,38 @@ import Navbar from '../../navbar/navbar';
 import getdatacoinparams from '../../../../api/getdatacoinparams';
 import './detailcoin.css';
 import {connect} from 'react-redux';
+import io from 'socket.io-client'
 class DetailCoin extends Component{
   constructor(props){
     super(props);
     this.state = {
       dataparams : null
-    }
+    };
+    this.socket = io.connect("https://coincap.io")
   }
   componentDidMount(){
     this.Fetchdatacoinparams();
+    this.socketio();
   }
+  socketio = ()=>{
+      var e = this;
+      this.socket.on('trades', function (data) {
+        if(data.message.coin === e.props.match.params.coin){
+          return document.getElementById("price").innerHTML = `$${e.duyetqua(data.message.msg.price.toString()) === 0 ? data.message.msg.price.toFixed(4) : data.message.msg.price.toFixed(2)}`;
+        } // so sach params coin === coin gui ve thi thuc hien thay doi
+      });
+  }
+  duyetqua = (text)=>{
+    var price = text.split(".");
+    var so = null;
+    price.map((i,v)=>{
+      if(Number(i)===0){
+        return so = Number(i);
+      }
+      return i;
+    })
+    return so;
+  } // duyệt qua số đầu tiên bằng 0 thì toFixed(4) khác 0 thì toFixed(2)
   Fetchdatacoinparams = async ()=>{
     try {
       await  getdatacoinparams(this.props.match.params.coin)
@@ -63,7 +85,7 @@ class DetailCoin extends Component{
               <div className="rankcoin">
 
                   <span className="rankcoin_number">{dataparams.rank}</span>
-                  <img src="/icon/badge.png" className="rankcoinImg"></img>
+                  <img src={"/icon/badge.png"} alt={"picturecoin"} className="rankcoinImg" />
               </div>
               <div className="name">
                 <span className={`sprite sprite-${this.format_space(dataparams.display_name.toLowerCase())}`}></span>
@@ -72,7 +94,7 @@ class DetailCoin extends Component{
             </div>
             <div className="col-sm-6 pricecoin_infoother">
               <div className="pricecoin">
-                <span>${dataparams.price}</span>
+                <span id="price">${dataparams.price}</span>
                 <span style={{color:dataparams.cap24hrChange>0 ? 'green' : "red"}}> ({dataparams.cap24hrChange}%)</span>
               </div>
               <div className="infoother">

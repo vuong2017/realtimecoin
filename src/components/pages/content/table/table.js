@@ -19,15 +19,16 @@ class Table extends Component{
     socket.on('trades', function (data) {
           e.state.datashow.map((item,index)=>{
               if(item.short===data.coin){
-                var price = e.getClass("price")[index].innerHTML.slice(1);
+                var price = e.getClass("price")[index].innerHTML.slice(1); // trừ đi 1 vị trí đầu là $ mới so sanh được , so sanh coin pumb hay dump dựa trên price đc render ra và price mới được lấy về
                 if(data.message.msg.price > price ){
                   e.getClass("coin_item")[index].setAttribute("class","coin_item coin_pumb_now");
-                  e.getClass("price")[index].innerHTML = `$${data.message.msg.price.toFixed(2)}`;
+                  e.getClass("price")[index].innerHTML = `$${e.duyetqua(data.message.msg.price.toString()) === 0 ? data.message.msg.price.toFixed(4) : data.message.msg.price.toFixed(2)}`;
                   e.getClass("price")[index].style.color = "rgba(108, 168, 46, 1.0)"
+
                 }
                 else{
                   e.getClass("coin_item")[index].setAttribute("class","coin_item coin_dump_now");
-                  e.getClass("price")[index].innerHTML = `$${data.message.msg.price.toFixed(2)}`;
+                  e.getClass("price")[index].innerHTML = `$${e.duyetqua(data.message.msg.price.toString()) === 0 ? data.message.msg.price.toFixed(4) : data.message.msg.price.toFixed(2)}`;
                   e.getClass("price")[index].style.color = "rgba(206, 92, 92, 1.0)";
 
                 }
@@ -88,6 +89,17 @@ class Table extends Component{
     return textstring;
   } // tách chuỗi thành môt mảng các phần tử
   // xong thực hiện map qua từng phần tử để có  thể gộp thành 1 chuỗi duy nhất (dfsdf sdfsdfsdf);
+  duyetqua = (text)=>{
+    var price = text.split(".");
+    var so = null;
+    price.map((i,v)=>{
+      if(Number(i)===0){
+        return so = Number(i);
+      }
+      return i;
+    })
+    return so;
+  }
   render(){
     return(
       <table className="table table-hover">
@@ -109,7 +121,7 @@ class Table extends Component{
           <tr key={index} className="coin_item"  style={{textAlign:'right'}}>
             <th scope="row">{index+1}</th>
             <td>
-            <a href={`${item.short}`}>
+            <a href={`${item.short}`} >
             <div style={{display:'flex',flexDirection:'row',alignItems:'center'  }}>
             <span className={`sprite sprite-${this.format_space(item.long.toLowerCase())} small_coin_logo`}></span>
             <span style={{paddingLeft:10,textAlign:'left'}}>{item.long}</span>
@@ -117,13 +129,14 @@ class Table extends Component{
             </a>
             </td>
             <td className="mktcap">${this.format_curency(item.mktcap.toString())}</td>
-            <td className="price">${item.price.toFixed(2)}</td>
+            <td  className="price">${this.duyetqua(item.price.toString()) === 0 ? item.price.toFixed(4) : item.price.toFixed(2)}</td>
             <td className="vwapData">${item.vwapData.toFixed(4)}</td>
             <td>{this.format_curency(item.supply.toString())}</td>
             <td className="volume" >${this.format_curency(item.volume.toString())}</td>
             <td className="cap24hrChange" style={{color:item.cap24hrChange>0 ? "#009e73" : "#d94040"}} >{item.cap24hrChange.length > 4  ? item.cap24hrChange : item.cap24hrChange.toFixed(2) }%</td>
           </tr>
         );
+
       })}
       </tbody>
       </table>
